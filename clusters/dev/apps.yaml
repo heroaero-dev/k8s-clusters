@@ -14,7 +14,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: ./apps/dev
+  path: ./apps/overlays/dev
   targetNamespace: dev
   prune: true
   wait: true
