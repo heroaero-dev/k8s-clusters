@@ -1,0 +1,4 @@
+a'/home/aero/Pictures/Screenshots/Screenshot from 2025-12-28 18-12-37.png' piVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./homepage
