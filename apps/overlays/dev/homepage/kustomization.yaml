@@ -5,6 +5,6 @@ resources:
   - ./ingress.yaml
   - ./external-secret.yaml
   - ./rbac.yaml
-  - ../../base/homepage
+  - ../../../base/homepage
 patches:
   - path: deployment-patch.yaml
