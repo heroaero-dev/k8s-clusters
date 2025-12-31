@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+  labels:
+    app: home-assistant
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate  # HA locks config dir - can't run two instances
+  selector:
+    matchLabels:
+      app: home-assistant
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      initContainers:
+        - name: install-hacs
+          image: alpine:3.23
+          command:
+            - sh
+            - -c
+            - |
+              if [ ! -d /config/custom_components/hacs ]; then
+                echo "Installing HACS..."
+                apk add --no-cache wget unzip
+                mkdir -p /config/custom_components
+                wget -O /tmp/hacs.zip https://github.com/hacs/integration/releases/latest/download/hacs.zip
+                unzip -o /tmp/hacs.zip -d /config/custom_components/hacs
+                rm /tmp/hacs.zip
+                echo "HACS installed successfully"
+              else
+                echo "HACS already installed"
+              fi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+        - name: inject-proxy-config
+          image: busybox:1.37
+          command:
+            - sh
+            - -c
+            - |
+              FILE=/config/configuration.yaml
+              if [ -f "$FILE" ] && ! grep -q use_x_forwarded_for "$FILE"; then
+                echo "" >> "$FILE"
+                echo "http:" >> "$FILE"
+                echo "  use_x_forwarded_for: true" >> "$FILE"
+                echo "  trusted_proxies:" >> "$FILE"
+                echo "    - 10.0.0.0/8" >> "$FILE"
+                echo "    - 172.16.0.0/12" >> "$FILE"
+              fi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      containers:
+        - name: home-assistant
+          image: homeassistant/home-assistant:2025.12
+          ports:
+            - containerPort: 8123
+          env:
+            - name: TZ
+              value: "America/Los_Angeles"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8123
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8123
+            initialDelaySeconds: 60
+            periodSeconds: 30
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: home-assistant-config

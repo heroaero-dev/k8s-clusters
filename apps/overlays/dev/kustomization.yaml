@@ -6,3 +6,4 @@ resources:
   - ./vaultwarden
   - ./n8n
   - ./postgresql
+  - ./home-assistant
