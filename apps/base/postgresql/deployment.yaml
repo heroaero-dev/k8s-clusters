@@ -18,11 +18,11 @@ spec:
         image: pgvector/pgvector:pg18
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "25m"
-          limits:
             memory: "256Mi"
-            cpu: "500m"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
         ports:
         - containerPort: 5432
         envFrom:
