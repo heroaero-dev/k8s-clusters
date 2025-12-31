@@ -1,0 +1,5 @@
+nfs:
+  path: /export/nasdata
+  server: 10.6.6.22
+storageClass:
+  defaultClass: true
