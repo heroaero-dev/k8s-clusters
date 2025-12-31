@@ -4,7 +4,7 @@ metadata:
   name: n8n-pvc
 spec:
   accessModes: ["ReadWriteOnce"]
-  storageClassName: nfs-client
+  storageClassName: nfs
   resources:
     requests:
       storage: 5Gi
