@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared-config
+data:
+  config.yaml: |
+    ingress:
+      - hostname: link.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: mealie.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: port.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: notes.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: vault.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: immich.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: jelly.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: n8n.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: home.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: traefik.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: viral.heroaero.dev
+        service: http://traefik.traefik.svc.cluster.local:80
+
+      # ============ STAGING (.info) ============
+      - hostname: heroaero.info
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: n8n.heroaero.info
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: link.heroaero.info
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: mealie.heroaero.info
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: jelly.heroaero.info
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: port.heroaero.info
+        service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: graf.heroaero.info
+        service: http://traefik.traefik.svc.cluster.local:80
+
+      # ============ CATCH-ALL ============
+      - service: http_status:404
