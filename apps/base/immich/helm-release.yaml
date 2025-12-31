@@ -1,0 +1,122 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+spec:
+  chart:
+    spec:
+      chart: immich
+      version: "0.10.3"
+      sourceRef:
+        kind: HelmRepository
+        name: immich
+        namespace: flux-system
+  interval: 1h
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              tag: v2.0.0
+            env:
+              REDIS_HOSTNAME: '{{ printf "%s-valkey" .Release.Name }}'
+              IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
+              DB_HOSTNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgresql
+                    key: DB_POSTGRESDB_HOST
+              DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgresql
+                    key: POSTGRES_USER
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgresql
+                    key: POSTGRES_PASSWORD
+              DB_DATABASE_NAME: immich
+    immich:
+      metrics:
+        # Enabling this will create the service monitors needed to monitor immich with the prometheus operator
+        enabled: false
+      configuration: {}
+          # trash:
+          #   enabled: false
+          #   days: 30
+          # storageTemplate:
+          #   enabled: true
+          #   template: "{{y}}/{{y}}-{{MM}}-{{dd}}/{{filename}}"
+      persistence:
+        library:
+          existingClaim: immich
+      # Dependencies
+    valkey:
+      enabled: true
+      controllers:
+        main:
+          containers:
+            main:
+              image:
+                repository: docker.io/valkey/valkey
+                tag: 9.0-alpine@sha256:b4ee67d73e00393e712accc72cfd7003b87d0fcd63f0eba798b23251bfc9c394
+                pullPolicy: IfNotPresent
+      persistence:
+        data:
+          enabled: true
+          size: 1Gi
+          # Optional: Set this to persistentVolumeClaim to keep job queues persistent
+          type: emptyDir
+          accessMode: ReadWriteOnce
+          storageClass: nfs
+    # Immich components
+    server:
+      enabled: true
+      controllers:
+        main:
+          containers:
+            main:
+              image:
+                repository: ghcr.io/immich-app/immich-server
+                pullPolicy: IfNotPresent
+      ingress:
+        main:
+          enabled: true
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-production
+            # proxy-body-size is set to 0 to remove the body limit on file uploads
+            nginx.ingress.kubernetes.io/proxy-body-size: "0"
+          hosts:
+            - host: immich.heroaero.dev
+              paths:
+                - path: "/"
+                  service:
+                    identifier: main
+          tls:
+            - hosts:
+                - immich.heroaero.dev
+              secretName: immich-tls
+
+    machine-learning:
+      enabled: true
+      controllers:
+        main:
+          containers:
+            main:
+              image:
+                repository: ghcr.io/immich-app/immich-machine-learning
+                pullPolicy: IfNotPresent
+              env:
+                TRANSFORMERS_CACHE: /cache
+                HF_XET_CACHE: /cache/huggingface-xet
+                MPLCONFIGDIR: /cache/matplotlib-config
+      persistence:
+        cache:
+          enabled: true
+          size: 10Gi
+          # Optional: Set this to persistentVolumeClaim to avoid downloading the ML models every start.
+          type: emptyDir
+          accessMode: ReadWriteMany
+          storageClass: nfs
