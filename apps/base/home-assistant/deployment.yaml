@@ -44,7 +44,7 @@ spec:
             - -c
             - |
               FILE=/config/configuration.yaml
-              if [ -f "$FILE" ] && ! grep -q use_x_forwarded_for "$FILE"; then
+              if ! grep -q use_x_forwarded_for "$FILE" 2>/dev/null; then
                 echo "" >> "$FILE"
                 echo "http:" >> "$FILE"
                 echo "  use_x_forwarded_for: true" >> "$FILE"
