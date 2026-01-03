@@ -23,6 +23,13 @@ spec:
       target:
         kind: HelmRelease
         name: cilium
+    - patch: |
+        - op: add
+          path: /spec/suspend
+          value: true
+      target:
+        kind: HelmRelease
+        name: portainer
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
