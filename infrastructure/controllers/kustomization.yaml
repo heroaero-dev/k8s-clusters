@@ -8,3 +8,4 @@ resources:
   - ./velero
   - ./nfs-subdir
   - ./cloudflare-tunnel
+  - ./external-secrets
