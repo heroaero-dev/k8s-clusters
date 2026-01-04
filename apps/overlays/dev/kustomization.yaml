@@ -9,3 +9,4 @@ resources:
   - ./home-assistant
   - ./jellyfin
   - ./linkding
+  - ./immich
