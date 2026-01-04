@@ -8,5 +8,5 @@ resources:
   - ./renovate
   - ./portainer
   - ./velero
-  - ./nfs-subdir
+  - ./nfs-subdir-external-provisioner
   - ./cloudflare-tunnel
