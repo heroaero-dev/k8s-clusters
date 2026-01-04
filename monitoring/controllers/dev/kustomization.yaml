@@ -4,3 +4,4 @@ resources:
   - ./victoria-logs
   - ./blackbox-exporter
   - ./kube-prometheus-stack
+  - ./fluent-bit
