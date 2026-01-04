@@ -76,6 +76,9 @@ spec:
       enabled: true
       controllers:
         main:
+          pod:
+            nodeSelector:
+              kubernetes.io/hostname: pi5
           containers:
             main:
               image:
@@ -103,6 +106,9 @@ spec:
       enabled: true
       controllers:
         main:
+          pod:
+            nodeSelector:
+              kubernetes.io/hostname: pi5
           containers:
             main:
               image:
