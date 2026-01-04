@@ -8,3 +8,4 @@ resources:
   - ./postgresql
   - ./home-assistant
   - ./jellyfin
+  - ./linkding
