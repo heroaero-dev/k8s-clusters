@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ./external-secret.yaml
   - ./ingress.yaml
-  - ../../../base/vault-warden
+  - ../../../base/vaultwarden
