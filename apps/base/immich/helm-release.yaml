@@ -84,6 +84,12 @@ spec:
               image:
                 repository: ghcr.io/immich-app/immich-server
                 pullPolicy: IfNotPresent
+              resources:
+                requests:
+                  memory: 512Mi
+                  cpu: 100m
+                limits:
+                  memory: 1Gi
       ingress:
         main:
           enabled: true
@@ -118,6 +124,12 @@ spec:
                 TRANSFORMERS_CACHE: /cache
                 HF_XET_CACHE: /cache/huggingface-xet
                 MPLCONFIGDIR: /cache/matplotlib-config
+              resources:
+                requests:
+                  memory: 1Gi
+                  cpu: 200m
+                limits:
+                  memory: 4Gi
       persistence:
         cache:
           enabled: true
