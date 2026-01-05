@@ -10,3 +10,6 @@ resources:
   - ./jellyfin
   - ./linkding
   - ./immich
+  - ./obsidian
+  - ./viral-analyzer
+  - ./atuin
