@@ -19,6 +19,13 @@ spec:
             allowPrivilegeEscalation: false
           name: obsidian
           image: linuxserver/obsidian:1.10.6
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limts:
+              memory: 4Gi
+              cpu: 1000m
           ports:
             - containerPort: 3000
           env:
