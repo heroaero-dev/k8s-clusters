@@ -8,7 +8,7 @@ patches:
       path: /spec/template/spec/containers/0/envFrom
       value:
         - secretRef:
-          name: staging-cloudflared
+            name: staging-cloudflared
   target:
     kind: Deployment
     name: cloudflared
