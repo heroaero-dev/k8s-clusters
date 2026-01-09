@@ -9,7 +9,7 @@ resources:
 #  - ./portainer
   - ./velero
 #  - ./nfs-subdir-external-provisioner
-#  - ./cloudflare-tunnel
+  - ./cloudflare-tunnel
   - ./reloader
   - ./metallb
 patches:
