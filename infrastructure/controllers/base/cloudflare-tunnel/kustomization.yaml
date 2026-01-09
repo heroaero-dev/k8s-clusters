@@ -4,5 +4,4 @@ namespace: network
 resources:
   - ./namespace.yaml
   - ./external-secret.yaml
-  - ./configmap.yaml
   - ./deployment.yaml
