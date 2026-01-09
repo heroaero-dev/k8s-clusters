@@ -12,24 +12,9 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  path: ./infrastructure/controllers
+  path: ./infrastructure/controllers/overlays/staging
   prune: true
   wait: true
-  patches:
-    - patch: |
-        - op: replace
-          path: /spec/values/k8sServiceHost
-          value: staging-control-plane
-      target:
-        kind: HelmRelease
-        name: cilium
-    - patch: |
-        - op: add
-          path: /spec/suspend
-          value: true
-      target:
-        kind: HelmRelease
-        name: portainer
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./external-secrets
+  - ./cert-manager
+  - ./cilium
+  - ./traefik
+  - ./renovate
+#  - ./portainer
+  - ./velero
+#  - ./nfs-subdir-external-provisioner
+#  - ./cloudflare-tunnel
+  - ./reloader
+patches:
+- patch: |
+    - op: replace
+      path: /spec/values/k8sServiceHost
+      value: staging-control-plane
+  target:
+    kind: HelmRelease
+    name: cilium
