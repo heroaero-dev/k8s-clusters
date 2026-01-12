@@ -57,7 +57,7 @@ spec:
               mountPath: /config
       containers:
         - name: home-assistant
-          image: homeassistant/home-assistant:2025.12
+          image: homeassistant/home-assistant:2026.1
           ports:
             - containerPort: 8123
           env:
