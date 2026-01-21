@@ -18,7 +18,7 @@ spec:
         - securityContext:
             allowPrivilegeEscalation: false
           name: obsidian
-          image: linuxserver/obsidian:1.11.4
+          image: linuxserver/obsidian:1.11.5
           resources:
             requests:
               memory: 1Gi
