@@ -38,7 +38,7 @@ spec:
             - name: config
               mountPath: /config
         - name: inject-proxy-config
-          image: busybox:1.37
+          image: busybox:1.38
           command:
             - sh
             - -c
@@ -57,7 +57,7 @@ spec:
               mountPath: /config
       containers:
         - name: home-assistant
-          image: homeassistant/home-assistant:2026.5
+          image: homeassistant/home-assistant:2026.6
           ports:
             - containerPort: 8123
           env:
