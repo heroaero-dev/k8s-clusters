@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
             - name: renovate
-              image: renovate/renovate:43.216-full
+              image: renovate/renovate:43.272-full
               args:
                 - heroaero-dev/k8s-clusters
               envFrom:
