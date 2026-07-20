@@ -18,7 +18,7 @@ spec:
     spec:
       initContainers:
         - name: install-hacs
-          image: alpine:3.23
+          image: alpine:3.24
           command:
             - sh
             - -c
@@ -57,7 +57,7 @@ spec:
               mountPath: /config
       containers:
         - name: home-assistant
-          image: homeassistant/home-assistant:2026.6
+          image: homeassistant/home-assistant:2026.7
           ports:
             - containerPort: 8123
           env:
