@@ -8,6 +8,8 @@ data:
     ingress:
       - hostname: link.heroaero.dev
         service: http://traefik.traefik.svc.cluster.local:80
+      - hostname: guerreroplumbingco.com
+        service: http://traefik.traefik.svc.cluster.local:80
       - hostname: mealie.heroaero.dev
         service: http://traefik.traefik.svc.cluster.local:80
       - hostname: heroaero.dev
