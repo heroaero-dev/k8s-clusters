@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: company-website
-  namespace: company-website
 spec:
   replicas: 1
   selector:
