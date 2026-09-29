@@ -21,12 +21,7 @@ spec:
             - name: html
               mountPath: /usr/share/nginx/html/index.html
               subPath: index.html
-            - name: work
-              mountPath: /usr/share/nginx/html/work
       volumes:
         - name: html
           configMap:
             name: company-website-html
-        - name: work
-          configMap:
-            name: company-website-work
